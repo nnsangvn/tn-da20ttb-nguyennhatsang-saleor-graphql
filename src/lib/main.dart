@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-
-import 'package:petshop/screen/cart/cart_screen.dart';
-import 'package:petshop/screen/home_page.dart';
-import 'package:petshop/screen/order/order_screen.dart';
-import 'package:petshop/screen/personal/personal_screen.dart';
-import 'package:petshop/screen/product/product_detail_screen.dart';
-import 'package:petshop/screen/product/product_overview_screen.dart';
+import 'package:petshop/core/routes/app_router.dart';
 import 'package:petshop/service/auth_service.dart';
 import 'package:petshop/service/cart_service.dart';
 import 'package:petshop/service/checkout_service.dart';
 import 'package:petshop/service/graphql_config.dart';
 import 'package:petshop/service/loading_service.dart';
-import 'package:petshop/service/login_or_register.dart';
 import 'package:petshop/service/order_service.dart';
 import 'package:petshop/service/product_service.dart';
 import 'package:petshop/themes/theme_provider.dart';
@@ -61,31 +54,11 @@ class MyApp extends StatelessWidget {
           ],
           child: Builder(
             builder: (context) {
-              return MaterialApp(
+              return MaterialApp.router(
                 title: 'PetShop',
                 debugShowCheckedModeBanner: false,
                 theme: Provider.of<ThemeProvider>(context).themeData,
-                home: token != null
-                    ? MyHomePage(
-                        title: 'User',
-                        client: client,
-                      )
-                    : const LoginOrRegister(),
-                routes: {
-                  ProductOverviewScreen.routeName: (context) =>
-                      const ProductOverviewScreen(),
-                  CartScreen.routeName: (context) => const CartScreen(),
-                  OrdersScreen.routeName: (context) => const OrdersScreen(),
-                  ProfileEdit.routeName: (context) => const ProfileEdit(),
-                },
-                onGenerateRoute: (settings) {
-                  if (settings.name == ProductDetailScreen.routeName) {
-                    return MaterialPageRoute(builder: (ctx) {
-                      return Container();
-                    });
-                  }
-                  return null;
-                },
+                routerConfig: AppRouter.router,
               );
             },
           ),

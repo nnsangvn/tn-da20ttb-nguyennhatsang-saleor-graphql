@@ -1,13 +1,16 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:petshop/Utils/utils.dart';
 import 'package:petshop/common/app_constants.dart';
 import 'package:petshop/components/button_base.dart';
 import 'package:petshop/components/button_custom_content.dart';
 import 'package:petshop/components/loading.dart';
+import 'package:petshop/core/routes/app_router.dart';
 import 'package:petshop/screen/auth/forget_password_screen.dart';
 import 'package:petshop/screen/auth/register.dart';
+import 'package:petshop/screen/product/product_overview_screen.dart';
 
 import 'package:petshop/service/auth_service.dart';
 import 'package:petshop/service/graphql_config.dart';
@@ -15,7 +18,6 @@ import 'package:petshop/service/loading_service.dart';
 import 'package:petshop/themes/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../components/input_base.dart';
-import '../home_page.dart';
 import 'package:get_it/get_it.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -38,17 +40,14 @@ class _LoginScreenState extends State<LoginScreen> {
     final response = await _authService.loginUser(email, password);
     loadingService.hideLoading(loadingId);
     if (response != null && response['token'] != null) {
-      final SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-      await sharedPreferences.setString(
-          AppConstants.keyToken, response['token']);
-      await sharedPreferences.setString(
-          AppConstants.keyRefreshToken, response['refreshToken']);
+      final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      await sharedPreferences.setString(AppConstants.keyToken, response['token']);
+      await sharedPreferences.setString(AppConstants.keyRefreshToken, response['refreshToken']);
       if (response['user']?['checkoutIds'] != null &&
           response['user']?['checkoutIds'] is List &&
           (response['user']?['checkoutIds'] as List).isNotEmpty) {
-        await sharedPreferences.setString(AppConstants.keyCheckoutId,
-            (response['user']?['checkoutIds'] as List).first);
+        await sharedPreferences.setString(
+            AppConstants.keyCheckoutId, (response['user']?['checkoutIds'] as List).first);
       } else {
         await sharedPreferences.setString(AppConstants.keyCheckoutId, '');
       }
@@ -60,18 +59,10 @@ class _LoginScreenState extends State<LoginScreen> {
       }
       if (mounted) {
         // Navigate to MyHomePage
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => MyHomePage(
-              title: 'User',
-              client: GraphqlConfig.initializeClient(),
-            ),
-          ),
-        );
+        context.go(AppRouter.home);
       }
     } else {
-      Utils().showToast(
-          'Tài khoản hoặc mật khẩu không chính xác', ToastType.failed);
+      Utils().showToast('Tài khoản hoặc mật khẩu không chính xác', ToastType.failed);
       if (mounted) {
         // Check if the state is still mounted
         print('Login failed');
@@ -122,12 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: ButtonCustomContent(
                       radius: BorderRadius.circular(4),
                       onTap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => const ForgetPasswordScreen(),
-                        //   ),
-                        // );
+                        context.push(AppRouter.forgetPassword);
                       },
                       child: Text(
                         'Quên mật khẩu?',
@@ -144,8 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 25),
                   ButtonBase(
                     text: "Đăng nhập",
-                    onTap:
-                        email.isNotEmpty && password.isNotEmpty ? _login : null,
+                    onTap: email.isNotEmpty && password.isNotEmpty ? _login : null,
                   ),
                   const SizedBox(height: 50),
                   Row(

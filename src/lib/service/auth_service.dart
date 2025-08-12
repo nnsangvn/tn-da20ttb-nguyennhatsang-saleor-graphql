@@ -17,11 +17,9 @@ class AuthService with ChangeNotifier {
   }
 
   Future<void> _initializeClient({bool? ignoreToken}) async {
-    final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
+    final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     final token = sharedPreferences.getString(AppConstants.keyToken);
-    client = GraphqlConfig.initializeClient(
-        token: ignoreToken == true ? null : token);
+    client = GraphqlConfig.initializeClient(token: ignoreToken == true ? null : token);
     notifyListeners();
   }
 
@@ -159,8 +157,7 @@ class AuthService with ChangeNotifier {
 
     if (result.hasException) {
       // ====================================== hết hạn token ======================================
-      if (result.exception?.graphqlErrors.first.extensions?['exception']
-              ?['code'] ==
+      if (result.exception?.graphqlErrors.first.extensions?['exception']?['code'] ==
           AppConstants.keyExpiredToken) {
         print('LINH_HET_TOKEN111');
         final response = await refreshToken();
@@ -260,8 +257,7 @@ class AuthService with ChangeNotifier {
 
     if (result.hasException) {
       // ====================================== hết hạn token ======================================
-      if (result.exception?.graphqlErrors.first.extensions?['exception']
-              ?['code'] ==
+      if (result.exception?.graphqlErrors.first.extensions?['exception']?['code'] ==
           AppConstants.keyExpiredToken) {
         print('LINH_HET_TOKEN');
         // final response = await refreshToken();
@@ -271,8 +267,7 @@ class AuthService with ChangeNotifier {
         // return logout();
       }
     } else {
-      final List<dynamic> accountErrors =
-          result.data?['externalLogout']['accountErrors'];
+      final List<dynamic> accountErrors = result.data?['externalLogout']['accountErrors'];
 
       if (accountErrors.isNotEmpty) {
         List<String> messages = [];
@@ -390,8 +385,7 @@ class AuthService with ChangeNotifier {
     final QueryResult result = await client.value.mutate(options);
 
     if (result.hasException) {
-      if (result.exception?.graphqlErrors.first.extensions?['exception']
-              ?['code'] ==
+      if (result.exception?.graphqlErrors.first.extensions?['exception']?['code'] ==
           AppConstants.keyExpiredToken) {
         print('LINH_HET_TOKEN');
         final response = await refreshToken();
@@ -428,8 +422,7 @@ class AuthService with ChangeNotifier {
     final QueryResult result = await client.value.query(options);
 
     if (result.hasException) {
-      if (result.exception?.graphqlErrors.first.extensions?['exception']
-              ?['code'] ==
+      if (result.exception?.graphqlErrors.first.extensions?['exception']?['code'] ==
           AppConstants.keyExpiredToken) {
         print('LINH_HET_TOKEN');
         final response = await refreshToken();
@@ -441,9 +434,7 @@ class AuthService with ChangeNotifier {
       return null;
     }
 
-    return result.data?['categories']['edges']
-        .map((edge) => edge['node'])
-        .toList();
+    return result.data?['categories']['edges'].map((edge) => edge['node']).toList();
   }
 
   Future<dynamic> createAddress({
@@ -489,8 +480,7 @@ class AuthService with ChangeNotifier {
     final QueryResult result = await client.value.mutate(options);
 
     if (result.hasException) {
-      if (result.exception?.graphqlErrors.first.extensions?['exception']
-              ?['code'] ==
+      if (result.exception?.graphqlErrors.first.extensions?['exception']?['code'] ==
           AppConstants.keyExpiredToken) {
         print('LINH_HET_TOKEN');
         final response = await refreshToken();
@@ -498,10 +488,7 @@ class AuthService with ChangeNotifier {
           return null;
         }
         return createAddress(
-            firstName: firstName,
-            streetAddress1: streetAddress1,
-            city: city,
-            phone: phone);
+            firstName: firstName, streetAddress1: streetAddress1, city: city, phone: phone);
       }
       return null;
     } else {
@@ -544,8 +531,7 @@ class AuthService with ChangeNotifier {
     final QueryResult result = await client.value.mutate(options);
 
     if (result.hasException) {
-      if (result.exception?.graphqlErrors.first.extensions?['exception']
-              ?['code'] ==
+      if (result.exception?.graphqlErrors.first.extensions?['exception']?['code'] ==
           AppConstants.keyExpiredToken) {
         print('LINH_HET_TOKEN');
         final response = await refreshToken();
@@ -556,8 +542,7 @@ class AuthService with ChangeNotifier {
       }
       return null;
     } else {
-      final address = result.data?['accountSetDefaultAddress']['user']
-          ['defaultBillingAddress'];
+      final address = result.data?['accountSetDefaultAddress']['user']['defaultBillingAddress'];
       return address;
     }
   }
@@ -596,8 +581,7 @@ class AuthService with ChangeNotifier {
     final QueryResult result = await client.value.mutate(options);
 
     if (result.hasException) {
-      if (result.exception?.graphqlErrors.first.extensions?['exception']
-              ?['code'] ==
+      if (result.exception?.graphqlErrors.first.extensions?['exception']?['code'] ==
           AppConstants.keyExpiredToken) {
         print('LINH_HET_TOKEN');
         final response = await refreshToken();
@@ -608,14 +592,12 @@ class AuthService with ChangeNotifier {
       }
       return null;
     } else {
-      final address = result.data?['accountSetDefaultAddress']['user']
-          ['defaultBillingAddress'];
+      final address = result.data?['accountSetDefaultAddress']['user']['defaultBillingAddress'];
       return address;
     }
   }
 
-  Future<dynamic> updateCheckoutAddresses(
-      String checkoutId, Map<String, dynamic> address) async {
+  Future<dynamic> updateCheckoutAddresses(String checkoutId, Map<String, dynamic> address) async {
     // Mutation cho cập nhật địa chỉ giao hàng
     const String updateShippingAddressMutation = '''
     mutation UpdateCheckoutShippingAddress(\$checkoutId: ID!, \$shippingAddress: AddressInput!) {
@@ -675,12 +657,10 @@ class AuthService with ChangeNotifier {
       },
     );
 
-    final QueryResult shippingResult =
-        await client.value.mutate(shippingOptions);
+    final QueryResult shippingResult = await client.value.mutate(shippingOptions);
 
     if (shippingResult.hasException) {
-      if (shippingResult.exception?.graphqlErrors.first.extensions?['exception']
-              ?['code'] ==
+      if (shippingResult.exception?.graphqlErrors.first.extensions?['exception']?['code'] ==
           AppConstants.keyExpiredToken) {
         print('LINH_HET_TOKEN');
         final response = await refreshToken();
@@ -700,8 +680,7 @@ class AuthService with ChangeNotifier {
         },
       );
 
-      final QueryResult billingResult =
-          await client.value.mutate(billingOptions);
+      final QueryResult billingResult = await client.value.mutate(billingOptions);
 
       if (billingResult.hasException) {
         return null;
@@ -740,8 +719,7 @@ class AuthService with ChangeNotifier {
     }
 
     // Check if there are any errors
-    final List<dynamic>? errors =
-        result.data?['requestPasswordReset']['accountErrors'];
+    final List<dynamic>? errors = result.data?['requestPasswordReset']['accountErrors'];
     if (errors != null && errors.isNotEmpty) {
       bool isReadySend = false;
       for (var error in errors) {
@@ -796,8 +774,7 @@ class AuthService with ChangeNotifier {
     }
     if (result.hasException ||
         ((result.data?['setPassword']?['accountErrors']) is List &&
-            (result.data?['setPassword']?['accountErrors'] as List)
-                .isNotEmpty)) {
+            (result.data?['setPassword']?['accountErrors'] as List).isNotEmpty)) {
       for (var err in result.data?['setPassword']?['accountErrors']) {
         Utils().showToast(err?['message'], ToastType.failed);
       }
@@ -830,8 +807,7 @@ class AuthService with ChangeNotifier {
       },
     );
 
-    final QueryResult result =
-        await GraphqlConfig.initializeClient().value.mutate(options);
+    final QueryResult result = await GraphqlConfig.initializeClient().value.mutate(options);
 
     if (result.hasException) {
       print('Error refreshing token: ${result.exception.toString()}');

@@ -51,8 +51,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   handleCreateCheckOutId() async {
     int id = loadingService.showLoading();
 
-    final SharedPreferences sharedPreferences =
-        await SharedPreferences.getInstance();
+    final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? token = sharedPreferences.getString(AppConstants.keyToken);
     Map<String, dynamic> deCodeToken = JwtDecoder.decode(token!);
     final response = await checkoutService.createCheckout(
@@ -104,11 +103,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           ),
         ),
         body: Container(
-          height: MediaQuery.of(context).size.height -
-              MediaQuery.of(context).padding.top +
-              1000,
-          padding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
+          height: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top + 1000,
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
           child: Stack(
             children: [
               SingleChildScrollView(
@@ -164,8 +160,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                       //Product price
                       Text(
-                        formatCurrency(
-                            widget.product.pricing.priceRange.start.amount),
+                        formatCurrency(widget.product.pricing.priceRange.start.amount),
                         style: TextStyle(
                           color: Utils().hexToColor('#e65400'),
                           fontSize: 22,
@@ -260,8 +255,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   }
 
   String formatCurrency(double amount) {
-    final format =
-        NumberFormat.currency(locale: 'vi_VN', decimalDigits: 0, symbol: AppConstants.subValuePrice);
+    final format = NumberFormat.currency(
+        locale: 'vi_VN', decimalDigits: 0, symbol: AppConstants.subValuePrice);
     return format.format(amount);
   }
 
