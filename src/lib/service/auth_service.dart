@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:injectable/injectable.dart';
-import 'package:petshop/Utils/utils.dart';
+import 'package:petshop/common/helper/utils.dart';
 import 'package:petshop/common/app_constants.dart';
 import 'package:petshop/service/graphql_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -172,64 +172,64 @@ class AuthService with ChangeNotifier {
     return result.data?['me'];
   }
 
-  Future<Map<String, dynamic>?> loginUser(String email, String password) async {
-    const String loginMutation = '''
-    mutation TokenCreate(\$email: String!, \$password: String!) {
-      tokenCreate(email: \$email, password: \$password) {
-        token
-        refreshToken
-        csrfToken
-        user {
-          id
-          email
-          firstName
-          lastName
-          checkoutIds
-          defaultBillingAddress {
-            firstName
-            lastName
-            companyName
-            streetAddress1
-            streetAddress2
-            city
-            cityArea
-            postalCode
-            country {
-              code
-              country
-            }
-            countryArea
-            phone
-            isDefaultBillingAddress
-            isDefaultShippingAddress
-          }
-        }   
-        errors {
-          field
-          message
-          code
-        }   
-      }
-    }
-    ''';
+  // Future<Map<String, dynamic>?> loginUser(String email, String password) async {
+  //   const String loginMutation = '''
+  //   mutation TokenCreate(\$email: String!, \$password: String!) {
+  //     tokenCreate(email: \$email, password: \$password) {
+  //       token
+  //       refreshToken
+  //       csrfToken
+  //       user {
+  //         id
+  //         email
+  //         firstName
+  //         lastName
+  //         checkoutIds
+  //         defaultBillingAddress {
+  //           firstName
+  //           lastName
+  //           companyName
+  //           streetAddress1
+  //           streetAddress2
+  //           city
+  //           cityArea
+  //           postalCode
+  //           country {
+  //             code
+  //             country
+  //           }
+  //           countryArea
+  //           phone
+  //           isDefaultBillingAddress
+  //           isDefaultShippingAddress
+  //         }
+  //       }
+  //       errors {
+  //         field
+  //         message
+  //         code
+  //       }
+  //     }
+  //   }
+  //   ''';
 
-    final MutationOptions options = MutationOptions(
-      document: gql(loginMutation),
-      variables: <String, dynamic>{
-        'email': email,
-        'password': password,
-      },
-    );
+  //   final MutationOptions options = MutationOptions(
+  //     document: gql(loginMutation),
+  //     variables: <String, dynamic>{
+  //       'email': email,
+  //       'password': password,
+  //     },
+  //   );
 
-    final QueryResult result = await client.value.mutate(options);
+  //   final QueryResult result = await client.value.mutate(options);
 
-    if (result.hasException) {
-      print(result.exception.toString());
-      return null;
-    }
+  //   if (result.hasException) {
+  //     print(result.exception.toString());
+  //     return null;
+  //   }
 
-    return result.data?['tokenCreate'];
-  }
+  //   return result.data?['tokenCreate'];
+  // }
 
   Future<void> logout(String pluginId) async {
     const String logoutMutation = '''

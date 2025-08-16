@@ -1,8 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:petshop/themes/colors.dart';
 
 enum ToastType { success, failed }
 
@@ -25,8 +22,7 @@ class Utils {
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.TOP,
       timeInSecForIosWeb: 4,
-      backgroundColor:
-          type == ToastType.failed ? Colors.red : Utils().hexToColor('#2ecc71'),
+      backgroundColor: type == ToastType.failed ? Colors.red : Utils().hexToColor('#2ecc71'),
       textColor: Colors.white,
       fontSize: 16.0,
     );

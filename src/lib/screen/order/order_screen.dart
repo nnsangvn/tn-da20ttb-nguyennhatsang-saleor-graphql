@@ -2,13 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
-import 'package:petshop/Utils/utils.dart';
+import 'package:petshop/common/helper/utils.dart';
 import 'package:petshop/common/app_constants.dart';
 import 'package:petshop/components/button_custom_content.dart';
 import 'package:petshop/model/user_model.dart';
 import 'package:petshop/service/auth_service.dart';
 import 'package:petshop/service/loading_service.dart';
-import 'package:petshop/themes/colors.dart';
+import 'package:petshop/core/themes/colors.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class OrdersScreen extends StatefulWidget {
@@ -39,8 +39,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
       _refreshController.loadComplete();
       loadingService.hideLoading(id);
       if (response == null) {
-        Utils().showToast(
-            'Đã có lỗi xảy ra trong quá trình xử lý', ToastType.failed);
+        Utils().showToast('Đã có lỗi xảy ra trong quá trình xử lý', ToastType.failed);
         return;
       }
       setState(() {
@@ -125,9 +124,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     ),
                     ...userInfo!.orders![index].lines.map((line) {
                       total = total +
-                          (line.variant?.product.pricing?.priceRange.start
-                                      .amount ??
-                                  0) *
+                          (line.variant?.product.pricing?.priceRange.start.amount ?? 0) *
                               line.quantity;
                       return Container(
                         margin: const EdgeInsets.only(top: 16),
@@ -138,17 +135,14 @@ class _OrdersScreenState extends State<OrdersScreen> {
                           radius: BorderRadius.circular(8),
                           color: AppColors.primary_400,
                           child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 8),
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 SizedBox(
                                   width: 70,
                                   height: 70,
-                                  child: Image.network(
-                                      line.variant?.product.thumbnail?.url ??
-                                          ''),
+                                  child: Image.network(line.variant?.product.thumbnail?.url ?? ''),
                                 ),
                                 const SizedBox(
                                   width: 16,

@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:petshop/Utils/utils.dart';
+import 'package:petshop/common/helper/utils.dart';
 import 'package:petshop/components/button_base.dart';
 import 'package:petshop/components/button_custom_content.dart';
 import 'package:petshop/components/input_base.dart';
-import 'package:petshop/model/address_model.dart';
 import 'package:petshop/model/user_model.dart';
 import 'package:petshop/service/auth_service.dart';
 import 'package:petshop/service/loading_service.dart';
 import 'package:petshop/service/login_or_register.dart';
-import 'package:petshop/themes/colors.dart';
+import 'package:petshop/core/themes/colors.dart';
 
 class ProfileEdit extends StatefulWidget {
   static const routeName = '/personal';
@@ -26,10 +25,8 @@ class _ProfileEditState extends State<ProfileEdit> {
   final LoadingService loadingService = GetIt.I<LoadingService>();
   bool isShowFormChangeInformation = false;
   UserInfo? userInfo;
-  final TextEditingController textEditingControllerUser =
-      TextEditingController();
-  final TextEditingController textEditingControllerPhoneNumber =
-      TextEditingController();
+  final TextEditingController textEditingControllerUser = TextEditingController();
+  final TextEditingController textEditingControllerPhoneNumber = TextEditingController();
   String? userName;
   String? email;
   String? phoneNumber;
@@ -62,8 +59,7 @@ class _ProfileEditState extends State<ProfileEdit> {
       final response = await _authService.fetchUserInfo();
       loadingService.hideLoading(id);
       if (response == null) {
-        Utils().showToast(
-            'Đã có lỗi xảy ra trong quá trình xử lý', ToastType.failed);
+        Utils().showToast('Đã có lỗi xảy ra trong quá trình xử lý', ToastType.failed);
         return;
       }
       setState(() {
@@ -99,8 +95,7 @@ class _ProfileEditState extends State<ProfileEdit> {
     }
 
     // Kiểm tra định dạng hợp lệ của số điện thoại
-    bool valid = RegExp(r'^(03|05|07|08|09|01[2|6|8|9]|02[0-9])+([0-9]{8})\b')
-        .hasMatch(newPhone);
+    bool valid = RegExp(r'^(03|05|07|08|09|01[2|6|8|9]|02[0-9])+([0-9]{8})\b').hasMatch(newPhone);
     bool valid1 = RegExp(r'^(19|18)+([0-9]{6,9})\b').hasMatch(newPhone);
 
     return valid || valid1;
@@ -118,8 +113,7 @@ class _ProfileEditState extends State<ProfileEdit> {
     );
     loadingService.hideLoading(id);
     if (response == null) {
-      Utils().showToast(
-          'Đã có lỗi xảy ra trong quá trình xử lý', ToastType.failed);
+      Utils().showToast('Đã có lỗi xảy ra trong quá trình xử lý', ToastType.failed);
       return;
     }
     setState(() {
@@ -155,8 +149,7 @@ class _ProfileEditState extends State<ProfileEdit> {
     final responseUpdateDefaultShipping =
         await _authService.setDefaultShippingAddress(response?['id']);
     loadingService.hideLoading(id);
-    if (responseUpdateDefaultBilling == null ||
-        responseUpdateDefaultShipping == null) {
+    if (responseUpdateDefaultBilling == null || responseUpdateDefaultShipping == null) {
       Utils().showToast('Thêm địa chỉ thất bại', ToastType.failed);
       return;
     }
@@ -220,8 +213,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     text: 'Lưu địa chỉ',
                     onTap: () {
                       if (street == null || city == null) {
-                        Utils().showToast(
-                            'Vui lòng nhập đầy đủ thông tin', ToastType.failed);
+                        Utils().showToast('Vui lòng nhập đầy đủ thông tin', ToastType.failed);
                         return;
                       }
                       Navigator.of(context).pop();
@@ -266,12 +258,9 @@ class _ProfileEditState extends State<ProfileEdit> {
                     });
                   },
                   child: Container(
-                    padding: const EdgeInsetsDirectional.symmetric(
-                        horizontal: 16, vertical: 8),
+                    padding: const EdgeInsetsDirectional.symmetric(horizontal: 16, vertical: 8),
                     child: Icon(
-                      isShowFormChangeInformation
-                          ? Icons.cancel_rounded
-                          : Icons.edit,
+                      isShowFormChangeInformation ? Icons.cancel_rounded : Icons.edit,
                       color: Colors.white,
                     ),
                   ),
@@ -290,8 +279,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                 children: [
                                   Image.asset('assets/pet_shop_logo.jpg'),
                                   Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 16),
+                                    padding: const EdgeInsets.symmetric(vertical: 16),
                                     decoration: BoxDecoration(
                                       border: Border(
                                         top: BorderSide(
@@ -301,8 +289,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                       ),
                                     ),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         const Text(
                                           'Tên',
@@ -316,8 +303,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                     ),
                                   ),
                                   Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 16),
+                                    padding: const EdgeInsets.symmetric(vertical: 16),
                                     decoration: BoxDecoration(
                                       border: Border(
                                         top: BorderSide(
@@ -327,8 +313,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                       ),
                                     ),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         const Text(
                                           'Email',
@@ -342,8 +327,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                     ),
                                   ),
                                   Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 16),
+                                    padding: const EdgeInsets.symmetric(vertical: 16),
                                     decoration: BoxDecoration(
                                       border: Border(
                                         top: BorderSide(
@@ -353,8 +337,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                       ),
                                     ),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         const Text(
                                           'Số điện thoại',
@@ -368,8 +351,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                     ),
                                   ),
                                   Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 16),
+                                    padding: const EdgeInsets.symmetric(vertical: 16),
                                     decoration: BoxDecoration(
                                       border: Border(
                                         top: BorderSide(
@@ -379,8 +361,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                                       ),
                                     ),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         const Text(
                                           'Địa chỉ',
@@ -389,19 +370,14 @@ class _ProfileEditState extends State<ProfileEdit> {
                                         Row(
                                           children: [
                                             // có địa chỉ
-                                            if (userInfo
-                                                    ?.defaultBillingAddress !=
-                                                null) ...[
+                                            if (userInfo?.defaultBillingAddress != null) ...[
                                               Text(
                                                 '${userInfo?.defaultBillingAddress?.streetAddress1 ?? '--'}, ${userInfo?.defaultBillingAddress?.city ?? '--'}',
-                                                style: const TextStyle(
-                                                    fontSize: 14),
+                                                style: const TextStyle(fontSize: 14),
                                               ),
                                             ],
                                             // không có địa chỉ
-                                            if (userInfo
-                                                    ?.defaultBillingAddress ==
-                                                null) ...[
+                                            if (userInfo?.defaultBillingAddress == null) ...[
                                               ButtonBase(
                                                 text: 'Thêm',
                                                 onTap: () {
@@ -409,17 +385,14 @@ class _ProfileEditState extends State<ProfileEdit> {
                                                 },
                                               )
                                             ],
-                                            if (userInfo
-                                                    ?.defaultBillingAddress !=
-                                                null) ...[
+                                            if (userInfo?.defaultBillingAddress != null) ...[
                                               const SizedBox(
                                                 width: 16,
                                               ),
                                               ButtonBase(
                                                 text: 'Sửa',
                                                 onTap: () {
-                                                  handleShowModalAddAddress(
-                                                      isUpdate: true);
+                                                  handleShowModalAddAddress(isUpdate: true);
                                                 },
                                               )
                                             ]

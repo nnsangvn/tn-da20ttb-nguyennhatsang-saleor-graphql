@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:petshop/core/navigation/navigation_cubit.dart';
 import 'package:petshop/core/navigation/tab_item.dart';
-import 'package:petshop/themes/colors.dart';
+import 'package:petshop/core/themes/colors.dart';
 
 class MainNavigation extends StatefulWidget {
   final Widget screen;

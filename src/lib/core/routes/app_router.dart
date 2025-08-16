@@ -4,15 +4,11 @@ import 'package:go_router/go_router.dart';
 import 'package:petshop/core/navigation/navigation_cubit.dart';
 import 'package:petshop/main_navigation.dart';
 import 'package:petshop/screen/auth/forget_password_screen.dart';
-import 'package:petshop/screen/auth/login.dart';
 import 'package:petshop/screen/auth/register.dart';
 import 'package:petshop/screen/cart/cart_screen.dart';
 import 'package:petshop/screen/order/order_screen.dart';
 import 'package:petshop/screen/personal/personal_screen.dart';
-import 'package:petshop/screen/product/product_detail_screen.dart';
 import 'package:petshop/screen/product/product_overview_screen.dart';
-import 'package:petshop/service/auth_service.dart';
-import 'package:petshop/service/graphql_config.dart';
 import 'package:petshop/service/login_or_register.dart';
 
 abstract final class AppRouter {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
-import 'package:petshop/Utils/utils.dart';
+import 'package:petshop/common/helper/utils.dart';
 import 'package:petshop/common/app_constants.dart';
 import 'package:petshop/components/button_custom_content.dart';
 import 'package:petshop/model/checkout_response_modal.dart';
@@ -9,7 +9,7 @@ import 'package:petshop/model/user_model.dart';
 import 'package:petshop/service/auth_service.dart';
 import 'package:petshop/service/loading_service.dart';
 import 'package:petshop/service/order_service.dart';
-import 'package:petshop/themes/colors.dart';
+import 'package:petshop/core/themes/colors.dart';
 import 'package:provider/provider.dart';
 
 import '../../service/cart_service.dart';
@@ -44,8 +44,7 @@ class _CartScreenState extends State<CartScreen> {
 
     loadingService.hideLoading(id);
     if (response == null) {
-      Utils().showToast(
-          'Đã có lỗi xảy ra trong quá trình xử lý', ToastType.failed);
+      Utils().showToast('Đã có lỗi xảy ra trong quá trình xử lý', ToastType.failed);
       return;
     }
     setState(() {
@@ -69,14 +68,12 @@ class _CartScreenState extends State<CartScreen> {
 
   handleOrder() async {
     if (userInfo?.defaultBillingAddress == null) {
-      Utils().showToast('Vui lòng thêm địa chỉ tại trang cá nhân để đặt hàng',
-          ToastType.failed);
+      Utils().showToast('Vui lòng thêm địa chỉ tại trang cá nhân để đặt hàng', ToastType.failed);
       return;
     }
     int id = loadingService.showLoading();
     String checkOutId = userInfo?.checkout?.id ?? '';
-    final responseUpdateAddress =
-        await _authService.updateCheckoutAddresses(checkOutId, {
+    final responseUpdateAddress = await _authService.updateCheckoutAddresses(checkOutId, {
       'firstName': userInfo?.firstName,
       'lastName': '',
       'streetAddress1': userInfo?.defaultBillingAddress?.streetAddress1,
@@ -86,15 +83,13 @@ class _CartScreenState extends State<CartScreen> {
       'countryArea': 'CA',
     });
     if (responseUpdateAddress == null) {
-      Utils().showToast(
-          'Đã có lỗi xảy ra trong quá trình xử lý', ToastType.failed);
+      Utils().showToast('Đã có lỗi xảy ra trong quá trình xử lý', ToastType.failed);
       return;
     }
     final response = await orderService.orderCheckoutById(checkOutId);
     loadingService.hideLoading(id);
     if (response == null) {
-      Utils().showToast(
-          'Đã có lỗi xảy ra trong quá trình xử lý', ToastType.failed);
+      Utils().showToast('Đã có lỗi xảy ra trong quá trình xử lý', ToastType.failed);
       return;
     }
     AppConstants.clearCheckoutId();
@@ -155,8 +150,7 @@ class _CartScreenState extends State<CartScreen> {
                   SizedBox(
                     width: 70,
                     height: 70,
-                    child:
-                        Image.network(cart[index].variant.product.thumbnailUrl),
+                    child: Image.network(cart[index].variant.product.thumbnailUrl),
                   ),
                   const SizedBox(
                     width: 16,
@@ -209,8 +203,7 @@ class _CartScreenState extends State<CartScreen> {
   double handleGetTotal() {
     double total = 0;
     for (CheckoutLineCheckoutResponse line in (checkoutResponse?.lines ?? [])) {
-      total =
-          total + (line.variant.product.pricing.start.amount * line.quantity);
+      total = total + (line.variant.product.pricing.start.amount * line.quantity);
     }
     return total;
   }
@@ -248,8 +241,7 @@ class _CartScreenState extends State<CartScreen> {
                       handleOrder();
                     },
               child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: const Text(
                   'Đặt ngay',
                   style: TextStyle(
@@ -266,8 +258,8 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   String formatCurrency(double amount) {
-    final format =
-        NumberFormat.currency(locale: 'vi_VN', decimalDigits: 0, symbol: AppConstants.subValuePrice);
+    final format = NumberFormat.currency(
+        locale: 'vi_VN', decimalDigits: 0, symbol: AppConstants.subValuePrice);
     return format.format(amount);
   }
 }

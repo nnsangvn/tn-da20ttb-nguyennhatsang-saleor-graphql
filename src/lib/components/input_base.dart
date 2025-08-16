@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:petshop/themes/colors.dart';
+import 'package:petshop/core/themes/colors.dart';
 
 class InputBase extends StatelessWidget {
   final TextEditingController? controller;

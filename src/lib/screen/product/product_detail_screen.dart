@@ -4,14 +4,14 @@ import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:petshop/Utils/utils.dart';
+import 'package:petshop/common/helper/utils.dart';
 import 'package:petshop/common/app_constants.dart';
 import 'package:petshop/components/button_custom_content.dart';
 import 'package:petshop/components/loading.dart';
 import 'package:petshop/model/product_model.dart';
 import 'package:petshop/service/checkout_service.dart';
 import 'package:petshop/service/loading_service.dart';
-import 'package:petshop/themes/colors.dart';
+import 'package:petshop/core/themes/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductDetailScreen extends StatefulWidget {

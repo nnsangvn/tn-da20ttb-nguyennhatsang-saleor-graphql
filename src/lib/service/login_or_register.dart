@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:petshop/screen/auth/login.dart';
+import 'package:petshop/screen/login/login.dart';
 import 'package:petshop/screen/auth/register.dart';
 
 /*

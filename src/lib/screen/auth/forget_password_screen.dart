@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:petshop/Utils/utils.dart';
+import 'package:petshop/common/helper/utils.dart';
 import 'package:petshop/components/button_base.dart';
 import 'package:petshop/components/input_base.dart';
 import 'package:petshop/components/loading.dart';
 import 'package:petshop/service/auth_service.dart';
 import 'package:petshop/service/loading_service.dart';
-import 'package:petshop/themes/colors.dart';
+import 'package:petshop/core/themes/colors.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
   const ForgetPasswordScreen({super.key});
@@ -34,8 +34,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
 
   handleSendRequest() async {
     int id = loadingService.showLoading();
-    final response =
-        await _authService.requestPasswordReset(email, 'https://example.com');
+    final response = await _authService.requestPasswordReset(email, 'https://example.com');
     loadingService.hideLoading(id);
     if (!response) {
       return;
@@ -47,13 +46,11 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
 
   handleChangePassword() async {
     if (newPassword != reNewPassword) {
-      Utils().showToast(
-          'Mật khẩu và nhập lại mật khẩu không trùng khớp', ToastType.failed);
+      Utils().showToast('Mật khẩu và nhập lại mật khẩu không trùng khớp', ToastType.failed);
       return;
     }
     Uri? uri = Uri.tryParse(link);
-    if (uri?.queryParameters['email'] == null ||
-        uri?.queryParameters['token'] == null) {
+    if (uri?.queryParameters['email'] == null || uri?.queryParameters['token'] == null) {
       Utils().showToast('Url không hợp lệ', ToastType.failed);
       return;
     }
@@ -65,8 +62,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
     if (response == null) {
       return;
     }
-    Utils().showToast(
-        'Đổi mật khẩu thành công', ToastType.success);
+    Utils().showToast('Đổi mật khẩu thành công', ToastType.success);
     Navigator.of(context).pop();
   }
 
@@ -113,8 +109,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   onTap: email.isNotEmpty
                       ? () {
                           if (!isValidEmail(email)) {
-                            Utils().showToast(
-                                'Email không hợp lệ', ToastType.failed);
+                            Utils().showToast('Email không hợp lệ', ToastType.failed);
                             return;
                           }
                           handleSendRequest();
@@ -179,9 +174,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   height: 16,
                 ),
                 ButtonBase(
-                  onTap: (link.isNotEmpty &&
-                          newPassword.isNotEmpty &&
-                          reNewPassword.isNotEmpty)
+                  onTap: (link.isNotEmpty && newPassword.isNotEmpty && reNewPassword.isNotEmpty)
                       ? () {
                           handleChangePassword();
                         }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:petshop/model/checkout_response_modal.dart';
-import 'package:petshop/popup/dialog_utils.dart';
-
+import 'package:petshop/components/dialog_utils.dart';
 
 class CartItemCard extends StatelessWidget {
   final CheckoutLineCheckoutResponse cartItem;

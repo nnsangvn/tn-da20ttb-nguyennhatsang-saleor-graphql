@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:petshop/Utils/utils.dart';
+import 'package:petshop/common/helper/utils.dart';
 
 class AppColors {
   static Color primary_50 = Utils().hexToColor('#f1f5fd');

@@ -4,13 +4,13 @@
 // import 'package:app/components/my_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:petshop/Utils/utils.dart';
+import 'package:petshop/common/helper/utils.dart';
 import 'package:petshop/common/app_constants.dart';
 import 'package:petshop/components/button_custom_content.dart';
 import 'package:petshop/components/loading.dart';
 import 'package:petshop/service/auth_service.dart';
 import 'package:petshop/service/loading_service.dart';
-import 'package:petshop/themes/colors.dart';
+import 'package:petshop/core/themes/colors.dart';
 
 import '../../components/button_base.dart';
 import '../../components/input_base.dart';
@@ -73,8 +73,7 @@ class _RegisterScreen extends State<RegisterScreen> {
     }
 
     // Kiểm tra định dạng hợp lệ của số điện thoại
-    bool valid = RegExp(r'^(03|05|07|08|09|01[2|6|8|9]|02[0-9])+([0-9]{8})\b')
-        .hasMatch(newPhone);
+    bool valid = RegExp(r'^(03|05|07|08|09|01[2|6|8|9]|02[0-9])+([0-9]{8})\b').hasMatch(newPhone);
     bool valid1 = RegExp(r'^(19|18)+([0-9]{6,9})\b').hasMatch(newPhone);
 
     return valid || valid1;
@@ -110,11 +109,9 @@ class _RegisterScreen extends State<RegisterScreen> {
           return;
         }
         if ((response?['accountRegister']?['accountErrors']) is List &&
-            (response?['accountRegister']?['accountErrors'] as List)
-                .isNotEmpty) {
+            (response?['accountRegister']?['accountErrors'] as List).isNotEmpty) {
           List<String> errs = [];
-          (response?['accountRegister']?['accountErrors'] as List)
-              .forEach((err) {
+          (response?['accountRegister']?['accountErrors'] as List).forEach((err) {
             errs.add(err['message'] ?? '');
           });
           Utils().showToast(errs.toString(), ToastType.failed);
@@ -138,8 +135,7 @@ class _RegisterScreen extends State<RegisterScreen> {
       }
     } else {
       loadingService.hideLoading(id);
-      Utils().showToast(
-          'Mật khẩu và Nhập lại mật khẩu không trùng khớp', ToastType.failed);
+      Utils().showToast('Mật khẩu và Nhập lại mật khẩu không trùng khớp', ToastType.failed);
     }
   }
 

@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:petshop/Utils/utils.dart';
+import 'package:petshop/common/helper/utils.dart';
 import 'package:petshop/common/app_constants.dart';
 import 'package:petshop/components/button_custom_content.dart';
 import 'package:petshop/components/input_base.dart';
@@ -14,7 +14,7 @@ import 'package:petshop/screen/product/product_detail_screen.dart';
 import 'package:petshop/service/auth_service.dart';
 import 'package:petshop/service/loading_service.dart';
 import 'package:petshop/service/product_service.dart';
-import 'package:petshop/themes/colors.dart';
+import 'package:petshop/core/themes/colors.dart';
 
 enum TabType { dog, cat, rabbit }
 
@@ -58,8 +58,7 @@ class _TabBarExampleState extends State<TabBarExample> {
     loadingService.hideLoading(a);
 
     if (response == null) {
-      Utils().showToast(
-          'Đã có lỗi xảy ra trong quá trình xử lý', ToastType.failed);
+      Utils().showToast('Đã có lỗi xảy ra trong quá trình xử lý', ToastType.failed);
       return;
     }
     for (var category in response) {
@@ -104,10 +103,8 @@ class _TabBarExampleState extends State<TabBarExample> {
               labelColor: Colors.white,
               indicatorColor: Colors.white,
               indicatorSize: TabBarIndicatorSize.tab,
-              labelStyle:
-                  const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              unselectedLabelStyle:
-                  const TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
+              labelStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              unselectedLabelStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.normal),
               tabs: const <Widget>[
                 Tab(text: 'Chó'),
                 Tab(text: 'Mèo'),
@@ -147,8 +144,7 @@ class NestedTabBar extends StatefulWidget {
   State<NestedTabBar> createState() => _NestedTabBarState();
 }
 
-class _NestedTabBarState extends State<NestedTabBar>
-    with TickerProviderStateMixin {
+class _NestedTabBarState extends State<NestedTabBar> with TickerProviderStateMixin {
   List<DropdownMenuItem> items = [];
   List<dynamic> categories = [];
   final LoadingService loadingService = GetIt.I<LoadingService>();
@@ -175,11 +171,10 @@ class _NestedTabBarState extends State<NestedTabBar>
     if (categorySelected?['id'] == null) {
       return;
     }
-    final response = await productService.fetchProductsForUser(
-        categorySelected?['id'], AppConstants.channelDefault,
-        filter: {
-          'search': valueSearch,
-        });
+    final response = await productService
+        .fetchProductsForUser(categorySelected?['id'], AppConstants.channelDefault, filter: {
+      'search': valueSearch,
+    });
     loadingService.hideLoading(idLoading);
 
     setState(() {
@@ -220,9 +215,7 @@ class _NestedTabBarState extends State<NestedTabBar>
                     handleGetProduct();
                     Navigator.of(context).pop();
                   },
-                  color: e?['id'] == categorySelected?['id']
-                      ? AppColors.primary_200
-                      : Colors.white,
+                  color: e?['id'] == categorySelected?['id'] ? AppColors.primary_200 : Colors.white,
                   radius: const BorderRadius.all(Radius.circular(0)),
                   child: Container(
                     padding: const EdgeInsets.symmetric(
@@ -290,11 +283,9 @@ class _NestedTabBarState extends State<NestedTabBar>
                     handleShowModalFilter();
                   },
                   child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 14),
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                     decoration: BoxDecoration(
-                      border:
-                          Border.all(width: 1, color: AppColors.primary_700),
+                      border: Border.all(width: 1, color: AppColors.primary_700),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Row(
@@ -333,8 +324,7 @@ class _NestedTabBarState extends State<NestedTabBar>
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, // Số cột
                   childAspectRatio: 0.7, // Tỷ lệ chiều cao/chiều rộng của mỗi ô
-                  crossAxisSpacing:
-                      10, // Khoảng cách giữa các ô theo chiều ngang
+                  crossAxisSpacing: 10, // Khoảng cách giữa các ô theo chiều ngang
                   mainAxisSpacing: 10, // Khoảng cách giữa các ô theo chiều dọc
                 ),
                 itemBuilder: (context, index) {
